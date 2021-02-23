@@ -542,6 +542,16 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("receivedMessage");
             showLog("receivedMessage: message --- " + message);
+            if (message.length() > 11) {
+//                showLog(message.substring(2, 8));
+                if (message.substring(2, 8).equals("status")) {
+
+                    String status = message.substring(11, message.length()-2);
+                    showLog(status);
+                    setRobotStatusTextView(status);
+                }
+            }
+
             try {
                 if (message.length() > 7 && message.substring(2,6).equals("grid")) {
                     String resultString = "";
@@ -674,15 +684,14 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-
+    public void setRobotStatusTextView(String status) {
+        robotStatusTextView.setText(status);
+    }
 
 
 
 
     public static TextView getRobotStatusTextView() {  return robotStatusTextView; }
-
-
-
 
 
 
