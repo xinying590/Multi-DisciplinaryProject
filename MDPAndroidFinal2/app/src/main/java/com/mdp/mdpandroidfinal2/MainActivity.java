@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showLog("Clicked moveForwardImageBtn");
+//                Log.d(TAG, "Clicked moveForwardImageBtn");
                 if (gridMap.getAutoUpdate())
                     updateStatus("Please press 'MANUAL'");
                 else if (gridMap.getCanDrawRobot() && !gridMap.getAutoUpdate()) {
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     gridMap.moveRobot("right");
                     refreshLabel();
                     showLog("Print message from onclick right");
-                    printMessage("D|");
+                    printMessage("tr");
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -204,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                     else
                         updateStatus("Unable to move backward");
                     showLog("Print message from onclick back");
-                    printMessage("S1|");
+                    printMessage("r");
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -223,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                     refreshLabel();
                     updateStatus("turning left");
                     showLog("Print message from onclick left");
-                    printMessage("A|");
+                    printMessage("tl");
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -454,9 +455,9 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.d(TAG, "E1"); //TODO: Check the editor.putString line
 //        editor.putString("message", CommsPopUp.getMessageReceivedTextView().getText() + "\n" + message);
-        Log.d(TAG, "E2");
+//        Log.d(TAG, "E2");
         editor.commit();
-        Log.d(TAG, "E3");
+//        Log.d(TAG, "E3");
         if (BluetoothConnectionService.BluetoothConnectionStatus == true) {
             byte[] bytes = message.getBytes(Charset.defaultCharset());
             BluetoothConnectionService.write(bytes);
