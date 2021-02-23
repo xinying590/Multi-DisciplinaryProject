@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -69,6 +70,51 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.02" />
 
+            <Button
+                android:id="@+id/f1ActionButton"
+                android:layout_width="70dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="149dp"
+                android:layout_marginLeft="149dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginBottom="68dp"
+                android:clickable="true"
+                android:contentDescription="F1"
+                android:focusable="true"
+                android:text="F1"
+                app:layout_constraintBottom_toTopOf="@+id/robotStatusTitleTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/configureButton" />
+
+            <Button
+                android:id="@+id/f2ActionButton"
+                android:layout_width="64dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="17dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="9dp"
+                android:clickable="true"
+                android:contentDescription="F2"
+                android:focusable="true"
+                android:text="F2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/mapView"
+                app:layout_constraintTop_toBottomOf="@+id/f1ActionButton" />
+
+            <Button
+                android:id="@+id/configureButton"
+                android:layout_width="138dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/configure"
+                app:layout_constraintBottom_toTopOf="@+id/setWaypointToggleBtn"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <ToggleButton
                 android:id="@+id/setStartPointToggleBtn"
@@ -122,9 +168,9 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:scaleType="fitCenter"
+                android:tint="@color/colorBlack"
                 app:layout_constraintStart_toEndOf="@+id/obstacleImageBtn"
                 app:layout_constraintTop_toBottomOf="@+id/updateButton"
-                android:tint="@color/colorBlack"
                 app:srcCompat="@drawable/directionpic" />
 
             <ToggleButton
@@ -148,17 +194,15 @@
                 android:id="@+id/xAxisTextView"
                 android:layout_width="45dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="48dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginBottom="8dp"
                 android:text="0"
                 android:textAlignment="center"
                 android:textColor="@color/colorRed"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/directionLabelTextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/xLabelTextView"
                 app:layout_constraintTop_toBottomOf="@+id/yAxisTextView" />
 
@@ -353,6 +397,7 @@
                 app:layout_constraintStart_toEndOf="@+id/mapView"
                 app:layout_constraintTop_toBottomOf="@+id/directionLabelTextView" />
 
+
             <TextView
                 android:id="@+id/yLabelTextView"
                 android:layout_width="30dp"
@@ -369,7 +414,6 @@
                 app:layout_constraintEnd_toStartOf="@+id/yAxisTextView"
                 app:layout_constraintStart_toEndOf="@+id/mapView"
                 app:layout_constraintTop_toBottomOf="@+id/setStartPointToggleBtn" />
-
 
             <TextView
                 android:id="@+id/xLabelTextView"
@@ -450,19 +494,21 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--        <androidx.viewpager.widget.ViewPager-->
-<!--            android:id="@+id/view_pager"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:layout_behavior="@string/appbar_scrolling_view_behavior" >-->
 
-<!--            <com.google.android.material.tabs.TabLayout-->
-<!--                android:id="@+id/tabs"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="?attr/colorPrimary"-->
-<!--                app:tabGravity="fill"/>-->
-<!--        </androidx.viewpager.widget.ViewPager>-->
+
+        <!--        <androidx.viewpager.widget.ViewPager-->
+        <!--            android:id="@+id/view_pager"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            app:layout_behavior="@string/appbar_scrolling_view_behavior" >-->
+
+        <!--            <com.google.android.material.tabs.TabLayout-->
+        <!--                android:id="@+id/tabs"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:background="?attr/colorPrimary"-->
+        <!--                app:tabGravity="fill"/>-->
+        <!--        </androidx.viewpager.widget.ViewPager>-->
 
     </LinearLayout>
 

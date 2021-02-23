@@ -1,5 +1,5 @@
 package com.mdp.mdpandroidfinal2;
-
+import com.mdp.mdpandroidfinal2.ui.main.ReconfigureFragment;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothDevice;
@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
     private static GridMap gridMap;
     static TextView xAxisTextView, yAxisTextView, directionAxisTextView;
     static TextView robotStatusTextView;
-//    static Button f1, f2;
-//    Button reconfigure;
-//    ReconfigureFragment reconfigureFragment = new ReconfigureFragment();
+    static Button f1, f2;
+    Button reconfigure;
+    ReconfigureFragment reconfigureFragment = new ReconfigureFragment();
 
     BluetoothConnectionService mBluetoothConnection;
     BluetoothDevice mBTDevice;
@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
         bluetoothButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("BluetoothPopUp", "Hi0");
                 Intent popup = new Intent(MainActivity.this, BluetoothPopUp.class); // changing to the bluetooth pop up ui
                 startActivity(popup);
             }
@@ -142,6 +141,50 @@ public class MainActivity extends AppCompatActivity {
         // Robot Status
         robotStatusTextView = findViewById(R.id.robotStatusTextView);
 
+        // Persistence strings
+        f1 = (Button) findViewById(R.id.f1ActionButton);
+        f2 = (Button) findViewById(R.id.f2ActionButton);
+        reconfigure = (Button) findViewById(R.id.configureButton);
+
+        if (sharedPreferences.contains("F1")) {
+            f1.setContentDescription(sharedPreferences.getString("F1", ""));
+            showLog("setText for f1Btn: " + f1.getContentDescription().toString());
+        }
+        if (sharedPreferences.contains("F2")) {
+            f2.setContentDescription(sharedPreferences.getString("F2", ""));
+            showLog("setText for f2Btn: " + f2.getContentDescription().toString());
+        }
+
+        f1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLog("Clicked f1Btn");
+                if (!f1.getContentDescription().toString().equals("empty"))
+                    MainActivity.printMessage(f1.getContentDescription().toString());
+                showLog("f1Btn value: " + f1.getContentDescription().toString());
+                showLog("Exiting f1Btn");
+            }
+        });
+
+        f2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLog("Clicked f2Btn");
+                if (!f2.getContentDescription().toString().equals("empty"))
+                    MainActivity.printMessage(f2.getContentDescription().toString());
+                showLog("f2Btn value: " + f2.getContentDescription().toString());
+                showLog("Exiting f2Btn");
+            }
+        });
+
+        reconfigure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLog("Clicked reconfigureBtn");
+                reconfigureFragment.show(getFragmentManager(), "Reconfigure Fragment");
+                showLog("Exiting reconfigureBtn");
+            }
+        });
 
 
         //Control Fragment
@@ -691,7 +734,9 @@ public class MainActivity extends AppCompatActivity {
         robotStatusTextView.setText(status);
     }
 
+    public static Button getF1() { return f1; }
 
+    public static Button getF2() { return f2; }
 
 
     public static TextView getRobotStatusTextView() {  return robotStatusTextView; }
