@@ -391,6 +391,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.printMessage("sendArena");
                 manualUpdateRequest = true;
                 showLog("Exiting updateButton");
+                // Removed default loading of obstacles
 //                try {
 //                    String message = "{\"map\":[{\"explored\": \"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\",\"length\":300,\"obstacle\":\"00000000000000000706180400080010001e000400000000200044438f840000000000000080\"}]}";
 //
