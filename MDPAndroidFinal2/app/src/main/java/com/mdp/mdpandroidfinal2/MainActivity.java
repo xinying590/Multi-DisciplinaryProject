@@ -391,14 +391,14 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.printMessage("sendArena");
                 manualUpdateRequest = true;
                 showLog("Exiting updateButton");
-                try {
-                    String message = "{\"map\":[{\"explored\": \"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\",\"length\":300,\"obstacle\":\"00000000000000000706180400080010001e000400000000200044438f840000000000000080\"}]}";
-
-                    gridMap.setReceivedJsonObject(new JSONObject(message));
-                    gridMap.updateMapInformation();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    String message = "{\"map\":[{\"explored\": \"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\",\"length\":300,\"obstacle\":\"00000000000000000706180400080010001e000400000000200044438f840000000000000080\"}]}";
+//
+//                    gridMap.setReceivedJsonObject(new JSONObject(message));
+//                    gridMap.updateMapInformation();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
             }
         });
 
@@ -467,6 +467,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void refreshMessageReceived() {
+        System.out.println("hey" + CommsPopUp.getMessageReceivedTextView());
         CommsPopUp.getMessageReceivedTextView().setText(sharedPreferences.getString("message", ""));
     }
 
@@ -615,7 +616,8 @@ public class MainActivity extends AppCompatActivity {
             String receivedText = sharedPreferences.getString("message", "") + "\n" + message;
             editor.putString("message", receivedText);
             editor.commit();
-            refreshMessageReceived();
+            //TODO: Put received message in chatbox
+//            refreshMessageReceived();
         }
     };
 
