@@ -145,6 +145,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+            <Button
+                android:id="@+id/calibrateButton"
+                android:layout_width="130dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginEnd="42dp"
+                android:layout_marginRight="42dp"
+                android:clickable="true"
+                android:text="CALIBRATE"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/f2ActionButton"
+                app:layout_constraintStart_toEndOf="@+id/configureButton"
+                tools:layout_editor_absoluteY="443dp" />
+
             <Button
                 android:id="@+id/updateButton"
                 android:layout_width="84dp"

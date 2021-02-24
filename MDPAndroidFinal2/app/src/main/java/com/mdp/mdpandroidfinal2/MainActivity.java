@@ -5,18 +5,23 @@ import android.app.ProgressDialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -44,7 +49,7 @@ import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     // Main Activity
     private static SharedPreferences sharedPreferences;
@@ -71,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
 //    private static long exploreTimer, fastestTimer;
 //    ToggleButton exploreButton, fastestButton;
 //    TextView exploreTimeTextView, fastestTimeTextView, robotStatusTextView;
-//    Switch phoneTiltSwitch;
-//    static Button calibrateButton;
+    Switch phoneTiltSwitch;
+    static Button calibrateButton;
 //    private static GridMap gridMap;
 
-//    private Sensor mSensor;
-//    private SensorManager mSensorManager;
+    private Sensor mSensor;
+    private SensorManager mSensorManager;
 
     //MapTabFragment
     Button resetMapBtn, updateButton;
@@ -141,6 +146,16 @@ public class MainActivity extends AppCompatActivity {
         // Robot Status
         robotStatusTextView = findViewById(R.id.robotStatusTextView);
 
+        myDialog = new ProgressDialog(MainActivity.this);
+        myDialog.setMessage("Waiting for other device to reconnect...");
+        myDialog.setCancelable(false);
+        myDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
         // Persistence strings
         f1 = (Button) findViewById(R.id.f1ActionButton);
         f2 = (Button) findViewById(R.id.f2ActionButton);
@@ -192,6 +207,8 @@ public class MainActivity extends AppCompatActivity {
         turnRightImageBtn = findViewById(R.id.rightImageBtn);
         moveBackImageBtn = findViewById(R.id.backImageBtn);
         turnLeftImageBtn = findViewById(R.id.leftImageBtn);
+        phoneTiltSwitch = findViewById(R.id.phoneTiltSwitch);
+        calibrateButton = findViewById(R.id.calibrateButton);
 
         moveForwardImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -272,6 +289,57 @@ public class MainActivity extends AppCompatActivity {
                 else
                     updateStatus("Please press 'STARTING POINT'");
                 showLog("Exiting turnLeftImageBtn");
+            }
+        });
+
+//        mSensorManager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
+        mSensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        phoneTiltSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (gridMap.getAutoUpdate()) {
+                    updateStatus("Please press 'MANUAL'");
+                    phoneTiltSwitch.setChecked(false);
+                }
+                else if (gridMap.getCanDrawRobot() && !gridMap.getAutoUpdate()) {
+                    if(phoneTiltSwitch.isChecked()){
+                        //showToast("Tilt motion control: ON");
+                        phoneTiltSwitch.setPressed(true);
+
+                        mSensorManager.registerListener(MainActivity.this, mSensor, mSensorManager.SENSOR_DELAY_NORMAL);
+                        sensorHandler.post(sensorDelay);
+                    }else{
+                        showToast("Tilt motion control: OFF");
+                        showLog("unregistering Sensor Listener");
+                        try {
+                            mSensorManager.unregisterListener(MainActivity.this);
+                        }catch(IllegalArgumentException e) {
+                            e.printStackTrace();
+                        }
+                        sensorHandler.removeCallbacks(sensorDelay);
+                    }
+                } else {
+                    updateStatus("Please press 'STARTING POINT'");
+                    phoneTiltSwitch.setChecked(false);
+                }
+                if(phoneTiltSwitch.isChecked()){
+                    compoundButton.setText("TILT ON");
+                }else
+                {
+                    compoundButton.setText("TILT OFF");
+                }
+            }
+        });
+
+        calibrateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLog("Clicked Calibrate Button");
+                MainActivity.printMessage("SS|");
+                manualUpdateRequest = true;
+                showLog("Exiting Calibrate Button");
             }
         });
 
@@ -445,9 +513,8 @@ public class MainActivity extends AppCompatActivity {
 //                }
             }
         });
-
-
     }
+
 
 
 
@@ -660,7 +727,7 @@ public class MainActivity extends AppCompatActivity {
             String receivedText = sharedPreferences.getString("message", "") + "\n" + message;
             editor.putString("message", receivedText);
             editor.commit();
-            //TODO: Put received message in chatbox
+            //TODO: Put received message in chatbox. This is needed to show message received
 //            refreshMessageReceived();
         }
     };
@@ -722,14 +789,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    //Control Fragment
-    public  void updateStatus(String message) {
-        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP,0, 0);
-        toast.show();
-    }
-
     public void setRobotStatusTextView(String status) {
         robotStatusTextView.setText(status);
     }
@@ -743,4 +802,79 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    //Control Fragment
+    public  void updateStatus(String message) {
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP,0, 0);
+        toast.show();
+    }
+
+    Handler sensorHandler = new Handler();
+    boolean sensorFlag= false;
+
+    private final Runnable sensorDelay = new Runnable() {
+        @Override
+        public void run() {
+            sensorFlag = true;
+            sensorHandler.postDelayed(this,1000);
+        }
+    };
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        String TAGsensor = "SensorChanged";
+        float x = event.values[0];
+        float y = event.values[1];
+        float z = event.values[2];
+
+        Log.d(TAGsensor, "X: "+x);
+        Log.d(TAGsensor, "Y: "+y);
+        Log.d(TAGsensor, "Z: "+z);
+
+
+//        showLog("SensorChanged X: "+x);
+//        showLog("SensorChanged Y: "+y);
+//        showLog("SensorChanged Z: "+z);
+
+        if(sensorFlag) {
+            if (y < -2) {
+                showLog("Sensor Move Forward Detected");
+                gridMap.moveRobot("forward");
+                MainActivity.refreshLabel();
+                MainActivity.printMessage("f");
+            } else if (y > 2) {
+                showLog("Sensor Move Backward Detected");
+                gridMap.moveRobot("back");
+                MainActivity.refreshLabel();
+                MainActivity.printMessage("r");
+            } else if (x > 2) {
+                showLog("Sensor Move Left Detected");
+                gridMap.moveRobot("left");
+                MainActivity.refreshLabel();
+                MainActivity.printMessage("tl");
+            } else if (x < -2) {
+                showLog("Sensor Move Right Detected");
+                gridMap.moveRobot("right");
+                MainActivity.refreshLabel();
+                MainActivity.printMessage("tr");
+            }
+        }
+        sensorFlag = false;
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static Button getCalibrateButton() {
+        return calibrateButton;
+    }
+    public Switch getTiltSwitch() {
+        return phoneTiltSwitch;
+
+    }
 }
