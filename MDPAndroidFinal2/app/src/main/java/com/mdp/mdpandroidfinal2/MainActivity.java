@@ -52,6 +52,15 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     // Main Activity
+    //Protocol String
+    String MOV_FOR = "ARD|F";
+    String TURN_LEFT = "ARD|L";
+    String TURN_RIGHT = "ARD|R";
+    String MOV_BACK = "ARD|REV";
+    String START_EXP ="START_EXP";
+    String START_FP= "START_FP";
+
+
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static Context context;
@@ -62,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     static TextView robotStatusTextView;
     static Button f1, f2;
     Button reconfigure;
+    Button startExpButton;
+    Button startFPButton;
     ReconfigureFragment reconfigureFragment = new ReconfigureFragment();
 
     BluetoothConnectionService mBluetoothConnection;
@@ -126,13 +137,33 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        Button mapInfoButton = (Button) findViewById(R.id.mapInfoButton);
-        mapInfoButton.setOnClickListener(new View.OnClickListener() {
+        Button chatButton = (Button) findViewById(R.id.chatButton);
+        chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("BluetoothPopUp", "Hi0");
                 Intent popup= new Intent(MainActivity.this, CommsPopUp.class); // changing to the comms pop up ui
                 startActivity(popup);
+            }
+        });
+
+        startExpButton = (Button) findViewById(R.id.startExpButton);
+        startExpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLog("Pressed start exploration button");
+                printMessage(START_EXP);
+
+            }
+        });
+
+        startFPButton = (Button) findViewById(R.id.startFPButton);
+        startFPButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLog("Pressed fastest path button");
+                printMessage(START_FP);
+
             }
         });
 
@@ -225,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     else
                         updateStatus("Unable to move forward");
                     showLog("Print message from onclick forward");
-                    printMessage("f");
+                    printMessage(MOV_FOR);
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -243,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     gridMap.moveRobot("right");
                     refreshLabel();
                     showLog("Print message from onclick right");
-                    printMessage("tr");
+                    printMessage(TURN_RIGHT);
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -265,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     else
                         updateStatus("Unable to move backward");
                     showLog("Print message from onclick back");
-                    printMessage("r");
+                    printMessage(MOV_BACK);
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -284,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     refreshLabel();
                     updateStatus("turning left");
                     showLog("Print message from onclick left");
-                    printMessage("tl");
+                    printMessage(TURN_LEFT);
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -349,10 +380,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         resetMapBtn = findViewById(R.id.resetMapBtn);
         setStartPointToggleBtn = findViewById(R.id.setStartPointToggleBtn);
         setWaypointToggleBtn = findViewById(R.id.setWaypointToggleBtn);
-        directionChangeImageBtn = findViewById(R.id.directionChangeImageBtn);
-        exploredImageBtn = findViewById(R.id.exploredImageBtn);
-        obstacleImageBtn = findViewById(R.id.obstacleImageBtn);
-        clearImageBtn = findViewById(R.id.clearImageBtn);
+//        directionChangeImageBtn = findViewById(R.id.directionChangeImageBtn);
+//        exploredImageBtn = findViewById(R.id.exploredImageBtn);
+//        obstacleImageBtn = findViewById(R.id.obstacleImageBtn);
+//        clearImageBtn = findViewById(R.id.clearImageBtn);
         manualAutoToggleBtn = findViewById(R.id.manualAutoToggleBtn);
         updateButton = findViewById(R.id.updateButton);
         
@@ -411,56 +442,56 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //            }
 //        });
 
-        exploredImageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLog("Clicked exploredImageBtn");
-                if (!gridMap.getExploredStatus()) {
-                    updateStatus("Please check cell");
-                    gridMap.setExploredStatus(true);
-                    gridMap.toggleCheckedBtn("exploredImageBtn");
-                }
-                else if (gridMap.getExploredStatus())
-                    gridMap.setSetObstacleStatus(false);
-                showLog("Exiting exploredImageBtn");
-            }
-        });
+//        exploredImageBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showLog("Clicked exploredImageBtn");
+//                if (!gridMap.getExploredStatus()) {
+//                    updateStatus("Please check cell");
+//                    gridMap.setExploredStatus(true);
+//                    gridMap.toggleCheckedBtn("exploredImageBtn");
+//                }
+//                else if (gridMap.getExploredStatus())
+//                    gridMap.setSetObstacleStatus(false);
+//                showLog("Exiting exploredImageBtn");
+//            }
+//        });
 
-        obstacleImageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLog("Clicked obstacleImageBtn");
-                if (!gridMap.getSetObstacleStatus()) {
-                    updateStatus("Please plot obstacles");
-                    gridMap.setSetObstacleStatus(true);
-                    gridMap.toggleCheckedBtn("obstacleImageBtn");
-                }
-                else if (gridMap.getSetObstacleStatus())
-                    gridMap.setSetObstacleStatus(false);
-                showLog("Exiting obstacleImageBtn");
-            }
-        });
+//        obstacleImageBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showLog("Clicked obstacleImageBtn");
+//                if (!gridMap.getSetObstacleStatus()) {
+//                    updateStatus("Please plot obstacles");
+//                    gridMap.setSetObstacleStatus(true);
+//                    gridMap.toggleCheckedBtn("obstacleImageBtn");
+//                }
+//                else if (gridMap.getSetObstacleStatus())
+//                    gridMap.setSetObstacleStatus(false);
+//                showLog("Exiting obstacleImageBtn");
+//            }
+//        });
 
-        clearImageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLog("Clicked clearImageBtn");
-                if (!gridMap.getUnSetCellStatus()) {
-                    updateStatus("Please remove cells");
-                    gridMap.setUnSetCellStatus(true);
-                    gridMap.toggleCheckedBtn("clearImageBtn");
-                }
-                else if (gridMap.getUnSetCellStatus())
-                    gridMap.setUnSetCellStatus(false);
-                showLog("Exiting clearImageBtn");
-            }
-        });
+//        clearImageBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showLog("Clicked clearImageBtn");
+//                if (!gridMap.getUnSetCellStatus()) {
+//                    updateStatus("Please remove cells");
+//                    gridMap.setUnSetCellStatus(true);
+//                    gridMap.toggleCheckedBtn("clearImageBtn");
+//                }
+//                else if (gridMap.getUnSetCellStatus())
+//                    gridMap.setUnSetCellStatus(false);
+//                showLog("Exiting clearImageBtn");
+//            }
+//        });
 
         manualAutoToggleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showLog("Clicked manualAutoToggleBtn");
-                if (manualAutoToggleBtn.getText().equals("MANUAL")) {
+                if (manualAutoToggleBtn.getText().equals("Manual")) {
                     try {
                         gridMap.setAutoUpdate(true);
                         autoUpdate = true;
@@ -469,13 +500,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         updateButton.setTextColor(Color.GRAY);
 //                        ControlFragment.getCalibrateButton().setClickable(false);
 //                        ControlFragment.getCalibrateButton().setTextColor(Color.GRAY);
-                        manualAutoToggleBtn.setText("AUTO");
+                        manualAutoToggleBtn.setText("Auto");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     updateStatus("AUTO mode");
                 }
-                else if (manualAutoToggleBtn.getText().equals("AUTO")) {
+                else if (manualAutoToggleBtn.getText().equals("Auto")) {
                     try {
                         gridMap.setAutoUpdate(false);
                         autoUpdate = false;
@@ -484,7 +515,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         updateButton.setTextColor(Color.BLACK);
 //                        ControlFragment.getCalibrateButton().setClickable(true);
 //                        ControlFragment.getCalibrateButton().setTextColor(Color.BLACK);
-                        manualAutoToggleBtn.setText("MANUAL");
+                        manualAutoToggleBtn.setText("Manual");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -654,6 +685,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("receivedMessage");
             showLog("receivedMessage: message --- " + message);
+            if (message.length() == 14){
+                if (message.substring(0,3).equals("obj")){
+                    showLog(message.substring(0,3));
+                   int x_coord = Integer.parseInt(message.substring(4, 6));
+                   showLog(message.substring(4, 6));
+                   int y_coord = Integer.parseInt(message.substring(7, 9));
+                   showLog(message.substring(7, 9));
+                   int id = Integer.parseInt(message.substring(11, 13));
+                   showLog(message.substring(11, 13));
+                   gridMap.drawImageNumberCell(x_coord, y_coord, id);
+
+                }
+            }
             if (message.length() > 11) {
 //                showLog(message.substring(2, 8));
                 if (message.substring(2, 8).equals("status")) {

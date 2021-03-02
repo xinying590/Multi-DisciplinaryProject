@@ -10,19 +10,19 @@
 
     <EditText
         android:id="@+id/typeBoxEditText"
-        android:layout_width="316dp"
-        android:layout_height="57dp"
+        android:layout_width="521dp"
+        android:layout_height="58dp"
         android:background="@drawable/rounded_corner"
         android:gravity="center|start"
         android:hint="Type something..."
         android:textColor="@color/colorBlack"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.105"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.974" />
+        app:layout_constraintVertical_bias="0.941" />
 
     <TextView
         android:id="@+id/messageReceivedTextView"
@@ -44,7 +44,7 @@
         android:id="@+id/messageReceivedTitleTextView"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:background="@drawable/border_black_background"
+        android:background="@color/colorDeepBlue"
         android:gravity="center"
         android:text="Message"
         android:textAlignment="center"
@@ -69,10 +69,10 @@
         app:backgroundTint="#0288D1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintHorizontal_bias="0.851"
         app:layout_constraintStart_toEndOf="@+id/typeBoxEditText"
         app:layout_constraintTop_toBottomOf="@+id/messageReceivedTextView"
-        app:layout_constraintVertical_bias="0.804"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+        app:layout_constraintVertical_bias="1.0"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

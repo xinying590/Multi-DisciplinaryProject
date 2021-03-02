@@ -4,9 +4,16 @@
     <color name="colorPrimaryDark">#1E88E5</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="border_color">#000000</color>
+    <color name="colorDeepBlue">#083A91</color>
+
+    <color name="border_color">#272727</color>
+    <color name="color_black">#000000</color>
+    <color name="colorGrey">#222121</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorRed">#FF0000</color>
     <color name="colorBlack">#636363</color>
     <color name="exploredColor">#FFF9FBE7</color>
+    <color name="colorBlue">#1E88E5</color>
+    <color name="background">#343a3e</color>
+
 </resources>

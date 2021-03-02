@@ -13,7 +13,7 @@
         android:layout_height="27dp"
         android:layout_marginTop="4dp"
         android:adjustViewBounds="false"
-        android:background="@color/colorBlack"
+        android:background="@color/colorDeepBlue"
         android:cropToPadding="false"
         android:elevation="14dp"
         android:src="@drawable/ic_back"
@@ -42,8 +42,8 @@
 
     <ListView
         android:id="@+id/pairedDevicesListView"
-        android:layout_width="379dp"
-        android:layout_height="117dp"
+        android:layout_width="388dp"
+        android:layout_height="220dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/border_white_background"
@@ -54,6 +54,7 @@
         android:textColor="@color/colorBlack"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pairedDevicesTitleTextView" />
 
@@ -81,9 +82,9 @@
         android:splitTrack="false"
         android:text="OFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.867"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="33dp" />
+        tools:layout_editor_absoluteY="25dp" />
 
     <Button
         android:id="@+id/searchBtn"
@@ -91,8 +92,10 @@
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@color/colorDeepBlue"
         android:onClick="toggleButtonScan"
         android:text="SEARCH"
+        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.769"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,23 +106,26 @@
         android:layout_width="380dp"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/border_black_background"
+        android:background="@color/colorDeepBlue"
         android:listSelector="#bdb9b9"
-        android:text="Device Found"
+        android:text="All Devices"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pairedDevicesListView" />
 
     <ListView
         android:id="@+id/otherDevicesListView"
-        android:layout_width="379dp"
-        android:layout_height="277dp"
+        android:layout_width="385dp"
+        android:layout_height="227dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/border_white_background"
         android:gravity="bottom"
@@ -128,6 +134,7 @@
         android:textColor="@color/colorBlack"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/otherDevicesTitleTextView" />
 
@@ -137,7 +144,9 @@
         android:layout_height="48dp"
         android:layout_marginStart="360dp"
         android:layout_marginEnd="8dp"
+        android:background="@color/colorDeepBlue"
         android:text="CONNECT"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -152,7 +161,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/border_black_background"
+        android:background="@color/colorDeepBlue"
         android:text="Paired Devices"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"

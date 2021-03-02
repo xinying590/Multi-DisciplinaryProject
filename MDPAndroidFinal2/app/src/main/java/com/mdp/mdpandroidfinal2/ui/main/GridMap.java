@@ -42,6 +42,7 @@ public class GridMap extends View {
     SharedPreferences sharedPreferences;
 
     private Paint blackPaint = new Paint();
+    private Paint bluePaint = new Paint();
     private Paint obstacleColor = new Paint();
     private Paint robotColor = new Paint();
     private Paint endColor = new Paint();
@@ -87,9 +88,10 @@ public class GridMap extends View {
         super(context, attrs);
         initMap();
         blackPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        bluePaint.setColor(Color.BLACK);
         obstacleColor.setColor(Color.BLACK);
         robotColor.setColor(Color.GREEN);
-        endColor.setColor(Color.RED);
+        endColor.setColor(Color.BLUE);
         startColor.setColor(Color.CYAN);
         waypointColor.setColor(Color.YELLOW);
         unexploredColor.setColor(Color.LTGRAY);
@@ -175,15 +177,15 @@ public class GridMap extends View {
         showLog("Entering drawGridNumber");
         for (int x = 1; x <= COL; x++) {
             if (x > 9)
-                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 5), cells[x][20].startY + (cellSize / 3), blackPaint);
+                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 5), cells[x][20].startY + (cellSize / 3), bluePaint);
             else
-                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 3), cells[x][20].startY + (cellSize / 3), blackPaint);
+                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 3), cells[x][20].startY + (cellSize / 3), bluePaint);
         }
         for (int y = 0; y < ROW; y++) {
             if ((20 - y) > 9)
-                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2), cells[0][y].startY + (cellSize / 1.5f), bluePaint);
             else
-                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 1.5f), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 1.5f), cells[0][y].startY + (cellSize / 1.5f), bluePaint);
         }
         showLog("Exiting drawGridNumber");
     }
@@ -644,9 +646,9 @@ public class GridMap extends View {
     public void toggleCheckedBtn(String buttonName) {
         ToggleButton setStartPointToggleBtn = ((Activity)this.getContext()).findViewById(R.id.setStartPointToggleBtn);
         ToggleButton setWaypointToggleBtn = ((Activity)this.getContext()).findViewById(R.id.setWaypointToggleBtn);
-        ImageButton obstacleImageBtn = ((Activity)this.getContext()).findViewById(R.id.obstacleImageBtn);
-        ImageButton exploredImageBtn = ((Activity)this.getContext()).findViewById(R.id.exploredImageBtn);
-        ImageButton clearImageBtn = ((Activity)this.getContext()).findViewById(R.id.clearImageBtn);
+//        ImageButton obstacleImageBtn = ((Activity)this.getContext()).findViewById(R.id.obstacleImageBtn);
+//        ImageButton exploredImageBtn = ((Activity)this.getContext()).findViewById(R.id.exploredImageBtn);
+//        ImageButton clearImageBtn = ((Activity)this.getContext()).findViewById(R.id.clearImageBtn);
 
         if (!buttonName.equals("setStartPointToggleBtn"))
             if (setStartPointToggleBtn.isChecked()) {
@@ -658,15 +660,15 @@ public class GridMap extends View {
                 this.setWaypointStatus(false);
                 setWaypointToggleBtn.toggle();
             }
-        if (!buttonName.equals("exploredImageBtn"))
-            if (exploredImageBtn.isEnabled())
-                this.setExploredStatus(false);
-        if (!buttonName.equals("obstacleImageBtn"))
-            if (obstacleImageBtn.isEnabled())
-                this.setSetObstacleStatus(false);
-        if (!buttonName.equals("clearImageBtn"))
-            if (clearImageBtn.isEnabled())
-                this.setUnSetCellStatus(false);
+//        if (!buttonName.equals("exploredImageBtn"))
+//            if (exploredImageBtn.isEnabled())
+//                this.setExploredStatus(false);
+//        if (!buttonName.equals("obstacleImageBtn"))
+//            if (obstacleImageBtn.isEnabled())
+//                this.setSetObstacleStatus(false);
+//        if (!buttonName.equals("clearImageBtn"))
+//            if (clearImageBtn.isEnabled())
+//                this.setUnSetCellStatus(false);
     }
 
 
