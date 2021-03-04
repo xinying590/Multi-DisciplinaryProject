@@ -88,7 +88,7 @@ public class GridMap extends View {
         super(context, attrs);
         initMap();
         blackPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        bluePaint.setColor(Color.BLACK);
+        bluePaint.setColor(Color.BLUE);
         obstacleColor.setColor(Color.BLACK);
         robotColor.setColor(Color.GREEN);
         endColor.setColor(Color.BLUE);

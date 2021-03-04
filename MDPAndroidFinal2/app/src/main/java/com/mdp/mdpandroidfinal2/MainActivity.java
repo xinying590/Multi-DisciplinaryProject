@@ -47,6 +47,9 @@ import org.json.JSONObject;
 
 import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -685,6 +688,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("receivedMessage");
             showLog("receivedMessage: message --- " + message);
+//            message = "AND|P1|P2";
+//            String str = message;
+//            ArrayList<String> messageList = new ArrayList<>(Arrays.asList(str.split(",")));
+//            showLog(messageList.get(0));
+//            showLog(messageList.get(1));
+
+//              String[] tmp = message.split("[,]");
+//              showLog(tmp[0]);
+//            showLog(tmp[1]);
+
+
+
+            // Parsing obj with ID
             if (message.length() == 14){
                 if (message.substring(0,3).equals("obj")){
                     showLog(message.substring(0,3));
@@ -698,6 +714,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 }
             }
+
+            // Parsing robot status
             if (message.length() > 11) {
 //                showLog(message.substring(2, 8));
                 if (message.substring(2, 8).equals("status")) {
